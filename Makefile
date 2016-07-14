@@ -8,7 +8,7 @@ CC = g++
 #COMPLIE_FLAGS = additional flags
 COMPILE_FLAGS = -g -std=c++0x -Wall
 
-LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cflags` `pkg-config opencv --libs` -lSDL2_image -lSDL2_ttf -ltiff -lao -lmpg123 -lwiringPi -pthread
+LINK_FLAGS = `sdl2-config --cflags` `sdl2-config --libs` `pkg-config opencv --cflags` `pkg-config opencv --libs` -lSDL2_image -pthread
 
 
 #OUTPUT_NAME = final name

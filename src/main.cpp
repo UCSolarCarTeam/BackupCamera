@@ -1,12 +1,21 @@
 #include "backup_camera.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <SDL.h>
 
-int main()
+//how to use: 
+//./<binary> xpos ypos
+int main(int argc, char* argv[])
 {
+    if (argc != 2) {
+        printf("Invalid number of arguments. Needs two arguments ./<binary> xpos ypos\n");
+    }
+
     BackupCamera *backup_camera = new BackupCamera();
     SDL_Renderer *renderer = NULL;
     SDL_Window *window = NULL; 
-    if (!backup_camera->init(&renderer, &window))
+
+    if (!backup_camera->init(&renderer, &window, atoi(argv[1]), atoi(argv[2])))
     {
         fprintf(stderr, "Could not initialize!\n");
         return -1;
@@ -23,7 +32,6 @@ int main()
 
     while (backup_camera->process_events())
     {
-            printf("updating\n");
         if (backup_camera->update()) {
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
