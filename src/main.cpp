@@ -7,8 +7,10 @@
 //./<binary> xpos ypos
 int main(int argc, char* argv[])
 {
-    if (argc != 2) {
+    printf("num of arguments %d\n", argc);
+    if (argc != 3) {
         printf("Invalid number of arguments. Needs two arguments ./<binary> xpos ypos\n");
+        return 0; 
     }
 
     BackupCamera *backup_camera = new BackupCamera();
@@ -40,4 +42,5 @@ int main(int argc, char* argv[])
     }
 
     backup_camera->close();
+    return 0;
 }
