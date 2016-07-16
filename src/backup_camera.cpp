@@ -3,9 +3,9 @@
 BackupCamera::BackupCamera(){
 }
 
-bool BackupCamera::init(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos) {
+bool BackupCamera::init(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos, int screen_width, int screen_height) {
     bool success = true;
-    success = init_SDL(empty_renderer, empty_window, xpos, ypos) && success; 
+    success = init_SDL(empty_renderer, empty_window, xpos, ypos, screen_width, screen_height) && success; 
 
     camera_one_ = new VideoStream();
     //song_player_one_ = new SongPlayer();
@@ -17,7 +17,7 @@ bool BackupCamera::init(SDL_Renderer **empty_renderer, SDL_Window **empty_window
 }
 
 //Creates the Window
-bool BackupCamera::init_SDL(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos) {
+bool BackupCamera::init_SDL(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos, int screen_width, int screen_height) {
     bool success = true;
     if (SDL_Init(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) < 0)
     {
@@ -26,7 +26,7 @@ bool BackupCamera::init_SDL(SDL_Renderer **empty_renderer, SDL_Window **empty_wi
     }
     else
     {
-        *empty_window = SDL_CreateWindow("Video Application", xpos, ypos, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_BORDERLESS);
+        *empty_window = SDL_CreateWindow("Video Application", xpos, ypos, screen_width, screen_height, SDL_WINDOW_BORDERLESS);
         if (empty_window == NULL)
         {
             printf("Window could not be created! SDL Error: %s\n", SDL_GetError());

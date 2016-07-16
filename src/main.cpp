@@ -7,8 +7,11 @@
 //./<binary> xpos ypos
 int main(int argc, char* argv[])
 {
-    if (argc != 3) {
-        printf("Invalid number of arguments. Needs two arguments ./<binary> xpos ypos\n");
+    if (argc != 7) {
+        printf("Invalid number of arguments. Needs six arguments separated by spaces"
+                "./<binary> screen_x screen_y "  
+                "screen_width screen_height "
+                "camera_res_x camera_res_y\n");
         return 0; 
     }
 
@@ -16,7 +19,7 @@ int main(int argc, char* argv[])
     SDL_Renderer *renderer = NULL;
     SDL_Window *window = NULL; 
 
-    if (!backup_camera->init(&renderer, &window, atoi(argv[1]), atoi(argv[2])))
+    if (!backup_camera->init(&renderer, &window, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
         fprintf(stderr, "Could not initialize!\n");
         return -1;
@@ -26,7 +29,7 @@ int main(int argc, char* argv[])
         printf("Renderer is null\n");
     }
 
-    backup_camera->init_screen_settings(window, 0, 720, 1366);
+    backup_camera->init_screen_settings(window, 0, atoi(argv[5]), atoi(argv[6]));
     backup_camera->init_graphics(renderer);
     printf("Starting threads\n");
     backup_camera->start_threads();

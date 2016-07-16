@@ -39,15 +39,13 @@ bool VideoStream::init_setting(SDL_Rect input_rect, int input_device, int camera
     video_rect_ = input_rect;
     m_input_device = input_device;
     cap = VideoCapture(m_input_device);
-    cap.set(CV_CAP_PROP_FRAME_WIDTH,1920);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT,1080);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH,camera_width);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT,camera_height);
     if (!cap.isOpened()) {
         return false;
     } else {
         return true;
     }
-
-
 }
 
 bool VideoStream::update(GraphicsHandler *graphics_handler_)
@@ -75,12 +73,6 @@ void VideoStream::signalToQuit()
 {
     m_quit = true;
 }
-
-void VideoStream::reboot_camera() {
-
-    cap = VideoCapture(0);
-}
-
 
 void VideoStream::ThreadFunction()
 {
