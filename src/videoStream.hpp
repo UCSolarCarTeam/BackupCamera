@@ -41,6 +41,7 @@ class VideoStream : public I_ThreadClass
         bool update(GraphicsHandler *graphics_handler_);
         IplImage *getFrame();
         void reboot_camera();
+		void releaseCaptureDevice();
 
     protected:
         void ThreadFunction();
@@ -55,6 +56,8 @@ class VideoStream : public I_ThreadClass
         VideoCapture cap;
 
         bool imageReady();
+		
+ 		
 
         bool m_quit;
         bool m_updateImage;

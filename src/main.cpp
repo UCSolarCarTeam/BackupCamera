@@ -37,10 +37,12 @@ int main(int argc, char* argv[])
     while (backup_camera->process_events())
     {
         if (backup_camera->update()) {
+
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
         }
+							
     }
 
     backup_camera->close();

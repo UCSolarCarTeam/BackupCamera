@@ -52,15 +52,25 @@ private:
     void init_graphics_handler(SDL_Renderer *renderer);
     void processGPIO();
     void signalToQuit(); 
+	void FullscreenToggle();
 
     //SDL_Renderer *renderer_;
-    //SDL_Window *window_;
-    GraphicsHandler *graphics_handler_;
+     SDL_Window **window_;
+	 SDL_Renderer **renderer_;
+	 GraphicsHandler *graphics_handler_;
     //SongPlayer *song_player_one_;
 
     /** Displayable **/
     VideoStream *camera_one_; 
     //MusicBar *music_bar_one_;
+	bool m_fullscreenFlag; 
+
+	int m_xpos;
+	int m_ypos;
+	int m_screen_width;
+	int m_screen_height;
+	int m_camera_height;
+	int m_camera_width;
 
 
 };

@@ -31,6 +31,7 @@ VideoStream::VideoStream()
     m_bufferNumber = 1; 
     m_updateImage = false;
     m_quit = false;
+	
 
 }
 
@@ -61,6 +62,8 @@ bool VideoStream::update(GraphicsHandler *graphics_handler_)
             img->widthStep,
             0xff0000, 0x00ff00, 0x0000ff, 0
             );
+
+
 
         graphics_handler_->draw(surface, video_rect_, false, true);
         SDL_FreeSurface(surface);
@@ -119,3 +122,10 @@ IplImage *VideoStream::getFrame()
             return NULL;
     }
 }
+
+void VideoStream::releaseCaptureDevice()
+{
+	cap.release();
+}
+
+
