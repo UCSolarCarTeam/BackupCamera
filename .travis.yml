@@ -7,6 +7,6 @@ install:
     - rm astyle -rf
 
 script: 
-    - "! (astyle *.h *.cpp -r --dry-run --options=astylerc | grep Formatted)"
+    - "! (astyle *.h *.cpp *.hpp -r --dry-run --options=astylerc | grep Formatted)"
 
 language: cpp
