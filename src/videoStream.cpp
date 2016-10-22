@@ -128,4 +128,10 @@ void VideoStream::releaseCaptureDevice()
 	cap.release();
 }
 
+void VideoStream::resizeVideoRect(SDL_Rect new_rect)
+{
+	video_rect_ = new_rect;
+	
+}
+
 

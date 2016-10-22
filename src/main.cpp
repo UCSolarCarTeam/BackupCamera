@@ -33,8 +33,9 @@ int main(int argc, char* argv[])
     backup_camera->init_graphics(renderer);
     printf("Starting threads\n");
     backup_camera->start_threads();
+	bool setFullscreenNext = true;
 
-    while (int fullscreenCheck = backup_camera->process_events())
+    while (int fullscreenToggleCheck = backup_camera->process_events())
     {
         if (backup_camera->update()) {
 
@@ -44,16 +45,21 @@ int main(int argc, char* argv[])
         }
 
 		//check for fullscreen toggle
-		if (fullscreenCheck == 2)
+		if (fullscreenToggleCheck == 2)
 		{
-			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-			renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			SDL_SetWindowFullscreen(window, setFullscreenNext ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+			backup_camera->resizeCameraRect(window, setFullscreenNext);
+			setFullscreenNext = !setFullscreenNext;
+			
 		}
-		else if (fullscreenCheck == 3)
+		/*else if (fullscreenCheck == 3)
 		{
-			SDL_SetWindowFullscreen(window, 0);
-			renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		}					
+			printf("test");
+			//SDL_SetWindowFullscreen(window, 0);
+			
+			
+			backup_camera->resizeCameraRect(window);
+		}*/					
     }
 
     backup_camera->close();

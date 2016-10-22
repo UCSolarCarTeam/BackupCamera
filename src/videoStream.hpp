@@ -42,6 +42,7 @@ class VideoStream : public I_ThreadClass
         IplImage *getFrame();
         void reboot_camera();
 		void releaseCaptureDevice();
+		void resizeVideoRect(SDL_Rect new_rect);
 
     protected:
         void ThreadFunction();

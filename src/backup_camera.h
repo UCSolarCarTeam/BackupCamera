@@ -46,6 +46,7 @@ public:
     void start_threads();
 
     void close();
+	void resizeCameraRect(SDL_Window *window, bool setFullscreenNext);
 
 private:
     bool init_SDL(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos, int screen_width, int screen_height);

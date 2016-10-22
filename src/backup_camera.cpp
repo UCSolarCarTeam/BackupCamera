@@ -134,7 +134,8 @@ int BackupCamera::process_events() {
 
 					case SDLK_f:
 						printf("f was pressed: toggle fullscreen\n");
-						if (m_fullscreenFlag == false)
+						return 2;
+						/*if (m_fullscreenFlag == false)
 						{
 							m_fullscreenFlag = true;
 							return 2;
@@ -143,7 +144,7 @@ int BackupCamera::process_events() {
 						{
 							m_fullscreenFlag = false;
 							return 3;
-						}						
+						}*/						
 						//FullscreenToggle();
 						//return false;
 						break;
@@ -168,59 +169,7 @@ void BackupCamera::signalToQuit() {
     //song_player_one_->songQuit();
 }
 
-//Toggles fullscreen by re-creating SDL window and restarting threads
 
-
-void BackupCamera::FullscreenToggle() {
-	
-
-	/*this->signalToQuit();
-	
-	this->close();
-	camera_one_ -> releaseCaptureDevice();
-
-	
-	if (m_fullscreenFlag == false)
-	{
-		m_fullscreenFlag = true;
-	}
-	else
-	{
-		m_fullscreenFlag = false;
-	}
-
-	//int windowMode = (m_fullscreenFlag ? SDL_WINDOW_FULLSCREEN : 0);
-	//SDL_SetWindowFullscreen(*window_ , windowMode);
-	
-	//renderer_ = NULL;
-    //window_ = NULL; 
-
-	 if (!this->init(renderer_, window_, m_xpos, m_ypos, m_screen_width, m_screen_height))
-    {
-        fprintf(stderr, "Could not initialize!\n");
-       // return -1;
-    }
-
-    if (renderer_ == NULL) {
-        printf("Renderer is null\n");
-    }
-
-    this->init_screen_settings(*window_, 0, m_camera_height, m_camera_width);
-    this->init_graphics(*renderer_);
-  
-
-    this->start_threads();
-	while (this->process_events())
-    {
-        if (this->update()) {
-
-            SDL_RenderPresent(*renderer_);
-            SDL_SetRenderDrawColor(*renderer_, 0, 0, 0, 0);
-            SDL_RenderClear(*renderer_);
-        }
-							
-    }*/
-}
 
 
 void BackupCamera::close() {
@@ -228,6 +177,29 @@ void BackupCamera::close() {
     //song_player_one_->WaitForThreadToExit();
     camera_one_->WaitForThreadToExit();
 }
+
+void BackupCamera::resizeCameraRect(SDL_Window *window, bool setFullscreenNext)
+	{
+	int w, h;
+    SDL_GetWindowSize(window, &w, &h);
+
+    SDL_Rect camera_one_new_rect;
+    camera_one_new_rect.x = 0;
+    camera_one_new_rect.y = 0;
+
+	if(setFullscreenNext)//should work witthout the if statement, but moving back to window doesnt shrink back for some reason when reading window size
+	{
+    camera_one_new_rect.w = w;
+    camera_one_new_rect.h = h;
+	}
+	else
+	{
+	camera_one_new_rect.w = m_screen_width;
+    camera_one_new_rect.h = m_screen_height;
+	}
+
+	camera_one_->resizeVideoRect(camera_one_new_rect);
+	}
 
 
 
