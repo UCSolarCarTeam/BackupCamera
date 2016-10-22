@@ -1,6 +1,7 @@
 #pragma once
 
-class Displayable {
+class Displayable
+{
 public:
-    virtual void update(GraphicsHandler *graphics) = 0;
+    virtual void update(GraphicsHandler* graphics) = 0;
 };

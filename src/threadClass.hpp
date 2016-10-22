@@ -16,7 +16,7 @@ public:
         {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
@@ -29,14 +29,14 @@ public:
 
 
 
-protected: 
+protected:
     /** Anything inheriting this class must define this function */
-    virtual void ThreadFunction() = 0; 
-    
+    virtual void ThreadFunction() = 0;
+
 private:
-    static void * ThreadReference(void * thread_id)
+    static void* ThreadReference(void* thread_id)
     {
-        ((I_ThreadClass *)thread_id)->ThreadFunction();
+        ((I_ThreadClass*)thread_id)->ThreadFunction();
         return NULL;
     }
 
