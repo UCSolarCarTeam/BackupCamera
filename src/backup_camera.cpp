@@ -111,7 +111,7 @@ bool BackupCamera::BackupCamera::update() {
 }
 
 
-bool BackupCamera::process_events() {
+int BackupCamera::process_events() {
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -134,13 +134,23 @@ bool BackupCamera::process_events() {
 
 					case SDLK_f:
 						printf("f was pressed: toggle fullscreen\n");
-						FullscreenToggle();
-						return false;
+						if (m_fullscreenFlag == false)
+						{
+							m_fullscreenFlag = true;
+							return 2;
+						}
+						else if (m_fullscreenFlag == true)
+						{
+							m_fullscreenFlag = false;
+							return 3;
+						}						
+						//FullscreenToggle();
+						//return false;
 						break;
                 }
         }
     }
-    return true;
+    return 1;
 }
 
 void BackupCamera::start_threads() {
@@ -162,8 +172,9 @@ void BackupCamera::signalToQuit() {
 
 
 void BackupCamera::FullscreenToggle() {
+	
 
-	this->signalToQuit();
+	/*this->signalToQuit();
 	
 	this->close();
 	camera_one_ -> releaseCaptureDevice();
@@ -208,7 +219,7 @@ void BackupCamera::FullscreenToggle() {
             SDL_RenderClear(*renderer_);
         }
 							
-    }
+    }*/
 }
 
 

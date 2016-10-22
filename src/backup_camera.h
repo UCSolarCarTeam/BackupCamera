@@ -41,7 +41,7 @@ public:
     bool init(SDL_Renderer **empty_renderer, SDL_Window **empty_window, int xpos, int ypos, int screen_width, int screen_height);
     bool init_graphics(SDL_Renderer *renderer);
     bool init_screen_settings(SDL_Window *window, int camera_device, int camera_height, int camera_width);
-    bool process_events();
+    int process_events();
     bool update();
     void start_threads();
 
