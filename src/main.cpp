@@ -49,19 +49,12 @@ int main(int argc, char* argv[])
         //check for fullscreen toggle
         if (fullscreenToggleCheck == 2)
         {
-            SDL_SetWindowFullscreen(window, setFullscreenNext ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+            SDL_SetWindowFullscreen(window, setFullscreenNext == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
             backup_camera->resizeCameraRect(window, setFullscreenNext);
             setFullscreenNext = !setFullscreenNext;
         }
 
-        /*else if (fullscreenCheck == 3)
-        {
-            printf("test");
-            //SDL_SetWindowFullscreen(window, 0);
-
-
-            backup_camera->resizeCameraRect(window);
-        }*/
+      
     }
 
     backup_camera->close();

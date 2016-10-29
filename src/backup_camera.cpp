@@ -2,24 +2,21 @@
 
 BackupCamera::BackupCamera()
 {
-    m_fullscreenFlag = false;
+    fullscreenFlag_ = false;
 }
 
 bool BackupCamera::init(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height)
 {
     bool success = true;
     success = init_SDL(empty_renderer, empty_window, xpos, ypos, screen_width, screen_height) && success;
-    //save variabes for later
-    m_xpos = xpos;
-    m_ypos = ypos;
-    m_screen_width = screen_width;
-    m_screen_height = screen_height;
-    window_  = empty_window;
-    renderer_ = empty_renderer;
+    
+	//save variabes for later
+
+    screenWidth_ = screen_width;
+    screenHeight_ = screen_height;
+
     camera_one_ = new VideoStream();
-    //song_player_one_ = new SongPlayer();
-    //song_player_one_->initSongPlayer();
-    //music_bar_one_ = new MusicBar(song_player_one_);
+
     return success;
 }
 
@@ -35,7 +32,7 @@ bool BackupCamera::init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_wi
     }
     else
     {
-        int windowMode = (m_fullscreenFlag ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
+        int windowMode = (fullscreenFlag_ == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
         *empty_window = SDL_CreateWindow("Video Application", xpos, ypos, screen_width, screen_height, windowMode);
 
         if (empty_window == NULL)
@@ -78,15 +75,8 @@ bool BackupCamera::init_screen_settings(SDL_Window* window, int camera_device, i
     camera_one_rect.w = w;
     camera_one_rect.h = h;
     success = camera_one_->init_setting(camera_one_rect, camera_device, camera_height, camera_width) && success;
-    //store variables for later
-    m_camera_height = camera_height;
-    m_camera_width = camera_width;
-    //SDL_Rect music_bar_one_rect;
-    //music_bar_one_rect.x = 0;
-    //music_bar_one_rect.y = h - 49;
-    //music_bar_one_rect.w = w;
-    //music_bar_one_rect.h = 49;
-    //music_bar_one_->init_setting(music_bar_one_rect);
+
+
     return success;
 }
 
@@ -111,7 +101,7 @@ bool BackupCamera::init_graphics(SDL_Renderer* renderer)
 //Used for any "Updates" you need. Currently there is only one "camera" within this class.
 bool BackupCamera::BackupCamera::update()
 {
-    //music_bar_one_->update(graphics_handler_);
+
     return camera_one_->update(graphics_handler_);
 }
 
@@ -142,18 +132,7 @@ int BackupCamera::process_events()
                     case SDLK_f:
                         printf("f was pressed: toggle fullscreen\n");
                         return 2;
-                        /*if (m_fullscreenFlag == false)
-                        {
-                            m_fullscreenFlag = true;
-                            return 2;
-                        }
-                        else if (m_fullscreenFlag == true)
-                        {
-                            m_fullscreenFlag = false;
-                            return 3;
-                        }*/
-                        //FullscreenToggle();
-                        //return false;
+
                         break;
                 }
         }
@@ -164,7 +143,7 @@ int BackupCamera::process_events()
 
 void BackupCamera::start_threads()
 {
-    //song_player_one_->StartThread();
+
     camera_one_->StartThread();
 }
 
@@ -175,13 +154,12 @@ void BackupCamera::processGPIO()
 void BackupCamera::signalToQuit()
 {
     camera_one_->signalToQuit();
-    //song_player_one_->songQuit();
+
 }
 
 void BackupCamera::close()
 {
-    //song_player_one_->closeSongPlayer();
-    //song_player_one_->WaitForThreadToExit();
+
     camera_one_->WaitForThreadToExit();
 }
 
@@ -200,8 +178,8 @@ void BackupCamera::resizeCameraRect(SDL_Window* window, bool setFullscreenNext)
     }
     else
     {
-        camera_one_new_rect.w = m_screen_width;
-        camera_one_new_rect.h = m_screen_height;
+        camera_one_new_rect.w = screenWidth_;
+        camera_one_new_rect.h = screenHeight_;
     }
 
     camera_one_->resizeVideoRect(camera_one_new_rect);
