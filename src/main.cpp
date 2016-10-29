@@ -5,22 +5,47 @@
 
 //how to use:
 //./<binary> xpos ypos
+
+
+SDL_Window* window_;
+BackupCamera* backupCamera_;
+bool quitSignal_;
+
+
+void handleEvent(char eventCode)
+{
+    switch (eventCode)
+    {
+        case  QUIT_EVENT_FLAG:
+            quitSignal_ = true;
+            break;
+
+        case  ENTER_FULLSCREEN_EVENT_FLAG:
+            SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
+            backupCamera_->resizeCameraRect(window_);
+            break;
+
+        case  EXIT_FULLSCREEN_EVENT_FLAG:
+            SDL_SetWindowFullscreen(window_, 0);
+            backupCamera_->resizeCameraRect(window_);
+            break;
+    }
+}
+
+
 int main(int argc, char* argv[])
 {
     if (argc != 7)
     {
-        printf("Invalid number of arguments. Needs six arguments separated by spaces"
-               "./<binary> screen_x screen_y "
-               "screen_width screen_height "
-               "camera_res_x camera_res_y\n");
+        printf("Usage: %s   screen_x_cordinate  screen_y_coordinate  screen_width  screen_height  camera_res_x  camera_res_y\n", argv[0]);
         return 0;
     }
 
-    BackupCamera* backup_camera = new BackupCamera();
+    backupCamera_ = new BackupCamera();
     SDL_Renderer* renderer = NULL;
-    SDL_Window* window = NULL;
+    window_ = NULL;
 
-    if (!backup_camera->init(&renderer, &window, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
+    if (!backupCamera_->init(&renderer, &window_, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
         fprintf(stderr, "Could not initialize!\n");
         return -1;
@@ -31,32 +56,33 @@ int main(int argc, char* argv[])
         printf("Renderer is null\n");
     }
 
-    backup_camera->init_screen_settings(window, 0, atoi(argv[5]), atoi(argv[6]));
-    backup_camera->init_graphics(renderer);
+    backupCamera_->init_screen_settings(window_, 0, atoi(argv[5]), atoi(argv[6]));
+    backupCamera_->init_graphics(renderer);
     printf("Starting threads\n");
-    backup_camera->start_threads();
-    bool setFullscreenNext = true;
+    backupCamera_->start_threads();
+    vector<char> eventsToHandle;
+    quitSignal_  = false;
 
-    while (int fullscreenToggleCheck = backup_camera->process_events())
+    while (!quitSignal_)
     {
-        if (backup_camera->update())
+        eventsToHandle = backupCamera_->process_events();
+
+        if (backupCamera_->update())
         {
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
         }
 
-        //check for fullscreen toggle
-        if (fullscreenToggleCheck == 2)
+        while (!eventsToHandle.empty())
         {
-            SDL_SetWindowFullscreen(window, setFullscreenNext == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-            backup_camera->resizeCameraRect(window, setFullscreenNext);
-            setFullscreenNext = !setFullscreenNext;
+            handleEvent(eventsToHandle.back());
+            eventsToHandle.pop_back();
         }
-
-      
     }
 
-    backup_camera->close();
+    backupCamera_->close();
     return 0;
 }
+
+

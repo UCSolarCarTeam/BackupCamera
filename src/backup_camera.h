@@ -25,11 +25,14 @@ extern "C" {
 #include "WiringPiButtons.hpp"
 #endif
 
-//#include "MusicBar.h"
-//#include "SongPlayer.h"
+
 #include "graphics_handler.h"
 #include "videoStream.hpp"
 
+//event flags to pass back to main super loop
+#define QUIT_EVENT_FLAG 'A'
+#define ENTER_FULLSCREEN_EVENT_FLAG 'B'
+#define EXIT_FULLSCREEN_EVENT_FLAG 'C'
 
 
 
@@ -42,28 +45,28 @@ public:
     bool init(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
     bool init_graphics(SDL_Renderer* renderer);
     bool init_screen_settings(SDL_Window* window, int camera_device, int camera_height, int camera_width);
-    int process_events();
+    vector<char> process_events();
     bool update();
     void start_threads();
 
     void close();
-    void resizeCameraRect(SDL_Window* window, bool setFullscreenNext);
+    void resizeCameraRect(SDL_Window* window);
 
 private:
     bool init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
     void init_graphics_handler(SDL_Renderer* renderer);
     void processGPIO();
     void signalToQuit();
-    void FullscreenToggle();
 
-    //SDL_Renderer *renderer_;
+
+
 
     GraphicsHandler* graphics_handler_;
-    //SongPlayer *song_player_one_;
+
 
     /** Displayable **/
     VideoStream* camera_one_;
-    //MusicBar *music_bar_one_;
+
     bool fullscreenFlag_;
 
 

@@ -9,14 +9,9 @@ bool BackupCamera::init(SDL_Renderer** empty_renderer, SDL_Window** empty_window
 {
     bool success = true;
     success = init_SDL(empty_renderer, empty_window, xpos, ypos, screen_width, screen_height) && success;
-    
-	//save variabes for later
-
     screenWidth_ = screen_width;
     screenHeight_ = screen_height;
-
     camera_one_ = new VideoStream();
-
     return success;
 }
 
@@ -75,8 +70,6 @@ bool BackupCamera::init_screen_settings(SDL_Window* window, int camera_device, i
     camera_one_rect.w = w;
     camera_one_rect.h = h;
     success = camera_one_->init_setting(camera_one_rect, camera_device, camera_height, camera_width) && success;
-
-
     return success;
 }
 
@@ -101,14 +94,14 @@ bool BackupCamera::init_graphics(SDL_Renderer* renderer)
 //Used for any "Updates" you need. Currently there is only one "camera" within this class.
 bool BackupCamera::BackupCamera::update()
 {
-
     return camera_one_->update(graphics_handler_);
 }
 
 
-int BackupCamera::process_events()
+vector<char> BackupCamera::process_events()
 {
     SDL_Event event;
+    vector<char> returningEvents = vector<char>();
 
     while (SDL_PollEvent(&event))
     {
@@ -117,7 +110,7 @@ int BackupCamera::process_events()
             case SDL_QUIT:
                 printf("SDL_QUIT was called\n");
                 signalToQuit();
-                return false;
+                returningEvents.push_back(QUIT_EVENT_FLAG);
                 break;
 
             case SDL_KEYDOWN:
@@ -126,24 +119,29 @@ int BackupCamera::process_events()
                     case SDLK_ESCAPE:
                         printf("Esc was Pressed!\n");
                         signalToQuit();
-                        return false;
+                        returningEvents.push_back(QUIT_EVENT_FLAG);
                         break;
 
                     case SDLK_f:
-                        printf("f was pressed: toggle fullscreen\n");
-                        return 2;
+                        if (fullscreenFlag_ == false)
+                        {
+                            returningEvents.push_back(ENTER_FULLSCREEN_EVENT_FLAG);
+                        }
+                        else
+                        {
+                            returningEvents.push_back(EXIT_FULLSCREEN_EVENT_FLAG);
+                        }
 
                         break;
                 }
         }
     }
 
-    return 1;
+    return returningEvents;
 }
 
 void BackupCamera::start_threads()
 {
-
     camera_one_->StartThread();
 }
 
@@ -154,16 +152,14 @@ void BackupCamera::processGPIO()
 void BackupCamera::signalToQuit()
 {
     camera_one_->signalToQuit();
-
 }
 
 void BackupCamera::close()
 {
-
     camera_one_->WaitForThreadToExit();
 }
 
-void BackupCamera::resizeCameraRect(SDL_Window* window, bool setFullscreenNext)
+void BackupCamera::resizeCameraRect(SDL_Window* window)
 {
     int w, h;
     SDL_GetWindowSize(window, &w, &h);
@@ -171,7 +167,7 @@ void BackupCamera::resizeCameraRect(SDL_Window* window, bool setFullscreenNext)
     camera_one_new_rect.x = 0;
     camera_one_new_rect.y = 0;
 
-    if (setFullscreenNext) //should work witthout the if statement, but moving back to window doesnt shrink back for some reason when reading window size
+    if (!fullscreenFlag_) //should work witthout the if statement, but moving back to window doesnt shrink back for some reason when reading window size
     {
         camera_one_new_rect.w = w;
         camera_one_new_rect.h = h;
@@ -182,5 +178,6 @@ void BackupCamera::resizeCameraRect(SDL_Window* window, bool setFullscreenNext)
         camera_one_new_rect.h = screenHeight_;
     }
 
+    fullscreenFlag_ = !fullscreenFlag_;
     camera_one_->resizeVideoRect(camera_one_new_rect);
 }

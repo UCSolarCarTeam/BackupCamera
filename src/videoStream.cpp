@@ -106,10 +106,7 @@ IplImage* VideoStream::getFrame()
     }
 }
 
-void VideoStream::releaseCaptureDevice()
-{
-    cap.release();
-}
+
 
 void VideoStream::resizeVideoRect(SDL_Rect new_rect)
 {

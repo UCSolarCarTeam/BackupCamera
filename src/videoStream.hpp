@@ -16,7 +16,6 @@ public:
     bool update(GraphicsHandler* graphics_handler_);
     IplImage* getFrame();
     void reboot_camera();
-    void releaseCaptureDevice();
     void resizeVideoRect(SDL_Rect new_rect);
 
 protected:
