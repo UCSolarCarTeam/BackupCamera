@@ -12,8 +12,3 @@ script:
     - "! (astyle *.h *.cpp *.hpp -r --dry-run --options=astylerc | grep Formatted)"
 
 language: cpp
-
-
-
-
-
