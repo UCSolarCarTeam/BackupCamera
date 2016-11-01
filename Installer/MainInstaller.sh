@@ -1,6 +1,6 @@
 DIR=`pwd`
 
-function finish {
+finish() {
 	echo "Cleaning up..."
 	rm $DIR/SDL2-2.0.3.tar.gz || true
 	rm $DIR/SDL2_ttf-2.0.12.tar.gz || true
