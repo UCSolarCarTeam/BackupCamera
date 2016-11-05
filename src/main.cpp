@@ -2,18 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL.h>
+#include "main_namespace.h"
 
 //how to use:
 //./<binary> xpos ypos
 
 
-SDL_Window* window_;
-BackupCamera* backupCamera_;
-bool quitSignal_;
+
 
 
 void handleEvent(char eventCode)
 {
+    using namespace mainVariables;
+
     switch (eventCode)
     {
         case  QUIT_EVENT_FLAG:
@@ -22,12 +23,12 @@ void handleEvent(char eventCode)
 
         case  ENTER_FULLSCREEN_EVENT_FLAG:
             SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
-            backupCamera_->resizeCameraRect(window_);
+            backupCamera_->toggleFullscreen(window_);
             break;
 
         case  EXIT_FULLSCREEN_EVENT_FLAG:
             SDL_SetWindowFullscreen(window_, 0);
-            backupCamera_->resizeCameraRect(window_);
+            backupCamera_->toggleFullscreen(window_);
             break;
     }
 }
@@ -35,6 +36,8 @@ void handleEvent(char eventCode)
 
 int main(int argc, char* argv[])
 {
+    using namespace mainVariables;
+
     if (argc != 7)
     {
         printf("Usage: %s   screen_x_cordinate  screen_y_coordinate  screen_width  screen_height  camera_res_x  camera_res_y\n", argv[0]);
@@ -43,7 +46,7 @@ int main(int argc, char* argv[])
 
     backupCamera_ = new BackupCamera();
     SDL_Renderer* renderer = NULL;
-    window_ = NULL;
+    //SDL_Window* window_ = NULL;
 
     if (!backupCamera_->init(&renderer, &window_, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
@@ -61,7 +64,7 @@ int main(int argc, char* argv[])
     printf("Starting threads\n");
     backupCamera_->start_threads();
     vector<char> eventsToHandle;
-    quitSignal_  = false;
+    //bool quitSignal_  = false;
 
     while (!quitSignal_)
     {

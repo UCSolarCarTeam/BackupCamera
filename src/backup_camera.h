@@ -29,11 +29,14 @@ extern "C" {
 #include "graphics_handler.h"
 #include "videoStream.hpp"
 
-//event flags to pass back to main super loop
-#define QUIT_EVENT_FLAG 'A'
-#define ENTER_FULLSCREEN_EVENT_FLAG 'B'
-#define EXIT_FULLSCREEN_EVENT_FLAG 'C'
+namespace eventFlags
+{
+    char const QUIT_EVENT_FLAG = 'A';
+    char const ENTER_FULLSCREEN_EVENT_FLAG = 'B';
+    char const EXIT_FULLSCREEN_EVENT_FLAG = 'C';
 
+
+}
 
 
 class BackupCamera
@@ -50,7 +53,7 @@ public:
     void start_threads();
 
     void close();
-    void resizeCameraRect(SDL_Window* window);
+    void toggleFullscreen(SDL_Window* window);
 
 private:
     bool init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);

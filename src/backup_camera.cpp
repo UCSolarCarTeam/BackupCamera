@@ -1,5 +1,6 @@
 #include "backup_camera.h"
 
+
 BackupCamera::BackupCamera()
 {
     fullscreenFlag_ = false;
@@ -100,8 +101,9 @@ bool BackupCamera::BackupCamera::update()
 
 vector<char> BackupCamera::process_events()
 {
+    using namespace eventFlags;
     SDL_Event event;
-    vector<char> returningEvents = vector<char>();
+    vector<char> Events = vector<char>();
 
     while (SDL_PollEvent(&event))
     {
@@ -110,7 +112,7 @@ vector<char> BackupCamera::process_events()
             case SDL_QUIT:
                 printf("SDL_QUIT was called\n");
                 signalToQuit();
-                returningEvents.push_back(QUIT_EVENT_FLAG);
+                Events.push_back(QUIT_EVENT_FLAG);
                 break;
 
             case SDL_KEYDOWN:
@@ -119,17 +121,17 @@ vector<char> BackupCamera::process_events()
                     case SDLK_ESCAPE:
                         printf("Esc was Pressed!\n");
                         signalToQuit();
-                        returningEvents.push_back(QUIT_EVENT_FLAG);
+                        Events.push_back(QUIT_EVENT_FLAG);
                         break;
 
                     case SDLK_f:
                         if (fullscreenFlag_ == false)
                         {
-                            returningEvents.push_back(ENTER_FULLSCREEN_EVENT_FLAG);
+                            Events.push_back(ENTER_FULLSCREEN_EVENT_FLAG);
                         }
                         else
                         {
-                            returningEvents.push_back(EXIT_FULLSCREEN_EVENT_FLAG);
+                            Events.push_back(EXIT_FULLSCREEN_EVENT_FLAG);
                         }
 
                         break;
@@ -137,7 +139,7 @@ vector<char> BackupCamera::process_events()
         }
     }
 
-    return returningEvents;
+    return Events;
 }
 
 void BackupCamera::start_threads()
@@ -159,7 +161,7 @@ void BackupCamera::close()
     camera_one_->WaitForThreadToExit();
 }
 
-void BackupCamera::resizeCameraRect(SDL_Window* window)
+void BackupCamera::toggleFullscreen(SDL_Window* window)
 {
     int w, h;
     SDL_GetWindowSize(window, &w, &h);
