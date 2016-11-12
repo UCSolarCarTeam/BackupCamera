@@ -29,13 +29,6 @@ extern "C" {
 #include "graphics_handler.h"
 #include "videoStream.hpp"
 
-
-
-#ifndef MAINNAMESPACE
-#define MAINNAMESPACE
-
-#include "backup_camera.h"
-
 namespace cameraVariables
 {
     char const QUIT_EVENT_FLAG = 'A';
@@ -43,11 +36,6 @@ namespace cameraVariables
     char const EXIT_FULLSCREEN_EVENT_FLAG = 'C';
     extern SDL_Window* window_;
 }
-
-
-
-#endif
-
 
 class BackupCamera
 {
