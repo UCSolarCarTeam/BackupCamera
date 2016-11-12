@@ -2,41 +2,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL.h>
-#include "main_namespace.h"
-
-//how to use:
-//./<binary> xpos ypos
 
 
-
-
-
-void handleEvent(char eventCode)
+namespace cameraVariables
 {
-    using namespace mainVariables;
-
-    switch (eventCode)
-    {
-        case  QUIT_EVENT_FLAG:
-            quitSignal_ = true;
-            break;
-
-        case  ENTER_FULLSCREEN_EVENT_FLAG:
-            SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
-            backupCamera_->toggleFullscreen(window_);
-            break;
-
-        case  EXIT_FULLSCREEN_EVENT_FLAG:
-            SDL_SetWindowFullscreen(window_, 0);
-            backupCamera_->toggleFullscreen(window_);
-            break;
-    }
+    SDL_Window* window_ = NULL;
 }
+
+
 
 
 int main(int argc, char* argv[])
 {
-    using namespace mainVariables;
+    using namespace cameraVariables;
 
     if (argc != 7)
     {
@@ -44,11 +22,10 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    backupCamera_ = new BackupCamera();
+    BackupCamera* backupCamera = new BackupCamera();
     SDL_Renderer* renderer = NULL;
-    //SDL_Window* window_ = NULL;
 
-    if (!backupCamera_->init(&renderer, &window_, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
+    if (!backupCamera->init(&renderer, &window_, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
         fprintf(stderr, "Could not initialize!\n");
         return -1;
@@ -59,32 +36,22 @@ int main(int argc, char* argv[])
         printf("Renderer is null\n");
     }
 
-    backupCamera_->init_screen_settings(window_, 0, atoi(argv[5]), atoi(argv[6]));
-    backupCamera_->init_graphics(renderer);
+    backupCamera->init_screen_settings(window_, 0, atoi(argv[5]), atoi(argv[6]));
+    backupCamera->init_graphics(renderer);
     printf("Starting threads\n");
-    backupCamera_->start_threads();
-    vector<char> eventsToHandle;
-    //bool quitSignal_  = false;
+    backupCamera->start_threads();
 
-    while (!quitSignal_)
+    while (backupCamera->process_events())
     {
-        eventsToHandle = backupCamera_->process_events();
-
-        if (backupCamera_->update())
+        if (backupCamera->update())
         {
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
             SDL_RenderClear(renderer);
         }
-
-        while (!eventsToHandle.empty())
-        {
-            handleEvent(eventsToHandle.back());
-            eventsToHandle.pop_back();
-        }
     }
 
-    backupCamera_->close();
+    backupCamera->close();
     return 0;
 }
 

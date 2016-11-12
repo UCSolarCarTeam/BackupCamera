@@ -50,7 +50,6 @@ bool BackupCamera::init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_wi
                 {
                     printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
                     success = false;
-                    //SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 }
             }
         }
@@ -99,11 +98,10 @@ bool BackupCamera::BackupCamera::update()
 }
 
 
-vector<char> BackupCamera::process_events()
+bool BackupCamera::process_events()
 {
-    using namespace eventFlags;
+    using namespace cameraVariables;
     SDL_Event event;
-    vector<char> Events = vector<char>();
 
     while (SDL_PollEvent(&event))
     {
@@ -112,7 +110,7 @@ vector<char> BackupCamera::process_events()
             case SDL_QUIT:
                 printf("SDL_QUIT was called\n");
                 signalToQuit();
-                Events.push_back(QUIT_EVENT_FLAG);
+                return false;
                 break;
 
             case SDL_KEYDOWN:
@@ -121,25 +119,17 @@ vector<char> BackupCamera::process_events()
                     case SDLK_ESCAPE:
                         printf("Esc was Pressed!\n");
                         signalToQuit();
-                        Events.push_back(QUIT_EVENT_FLAG);
+                        return false;
                         break;
 
                     case SDLK_f:
-                        if (fullscreenFlag_ == false)
-                        {
-                            Events.push_back(ENTER_FULLSCREEN_EVENT_FLAG);
-                        }
-                        else
-                        {
-                            Events.push_back(EXIT_FULLSCREEN_EVENT_FLAG);
-                        }
-
+                        this->toggleFullscreen();
                         break;
                 }
         }
     }
 
-    return Events;
+    return true;
 }
 
 void BackupCamera::start_threads()
@@ -161,25 +151,28 @@ void BackupCamera::close()
     camera_one_->WaitForThreadToExit();
 }
 
-void BackupCamera::toggleFullscreen(SDL_Window* window)
+void BackupCamera::toggleFullscreen()
 {
+    using namespace cameraVariables;
     int w, h;
-    SDL_GetWindowSize(window, &w, &h);
-    SDL_Rect camera_one_new_rect;
-    camera_one_new_rect.x = 0;
-    camera_one_new_rect.y = 0;
+    SDL_Rect cameraOneNewRect;
+    cameraOneNewRect.x = 0;
+    cameraOneNewRect.y = 0;
 
-    if (!fullscreenFlag_) //should work witthout the if statement, but moving back to window doesnt shrink back for some reason when reading window size
+    if (!fullscreenFlag_)
     {
-        camera_one_new_rect.w = w;
-        camera_one_new_rect.h = h;
+        SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
+        SDL_GetWindowSize(window_, &w, &h);
+        cameraOneNewRect.w = w;
+        cameraOneNewRect.h = h;
     }
     else
     {
-        camera_one_new_rect.w = screenWidth_;
-        camera_one_new_rect.h = screenHeight_;
+        SDL_SetWindowFullscreen(window_, 0);
+        cameraOneNewRect.w = screenWidth_;
+        cameraOneNewRect.h = screenHeight_;
     }
 
     fullscreenFlag_ = !fullscreenFlag_;
-    camera_one_->resizeVideoRect(camera_one_new_rect);
+    camera_one_->resizeVideoRect(cameraOneNewRect);
 }

@@ -106,8 +106,6 @@ IplImage* VideoStream::getFrame()
     }
 }
 
-
-
 void VideoStream::resizeVideoRect(SDL_Rect new_rect)
 {
     video_rect_ = new_rect;

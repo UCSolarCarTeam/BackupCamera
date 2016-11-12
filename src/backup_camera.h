@@ -29,14 +29,24 @@ extern "C" {
 #include "graphics_handler.h"
 #include "videoStream.hpp"
 
-namespace eventFlags
+
+
+#ifndef MAINNAMESPACE
+#define MAINNAMESPACE
+
+#include "backup_camera.h"
+
+namespace cameraVariables
 {
     char const QUIT_EVENT_FLAG = 'A';
     char const ENTER_FULLSCREEN_EVENT_FLAG = 'B';
     char const EXIT_FULLSCREEN_EVENT_FLAG = 'C';
-
-
+    extern SDL_Window* window_;
 }
+
+
+
+#endif
 
 
 class BackupCamera
@@ -48,12 +58,12 @@ public:
     bool init(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
     bool init_graphics(SDL_Renderer* renderer);
     bool init_screen_settings(SDL_Window* window, int camera_device, int camera_height, int camera_width);
-    vector<char> process_events();
+    bool process_events();
     bool update();
     void start_threads();
 
     void close();
-    void toggleFullscreen(SDL_Window* window);
+    void toggleFullscreen();
 
 private:
     bool init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
@@ -71,9 +81,6 @@ private:
     VideoStream* camera_one_;
 
     bool fullscreenFlag_;
-
-
     int screenWidth_;
     int screenHeight_;
-
 };
