@@ -3,19 +3,19 @@
 /*
  *The caller is responsible for SDL_FreeSurface on the *surface passed to this function
  */
-void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surfaceRect, bool vertFlip, bool horizFlip)
+void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surface_rect, bool vert_flip, bool horiz_flip)
 {
     SDL_RendererFlip flip;
 
-    if (vertFlip == true && horizFlip != true)
+    if (vert_flip == true && horiz_flip != true)
     {
         flip = SDL_FLIP_VERTICAL;
     }
-    else if (vertFlip != true && horizFlip == true)
+    else if (vert_flip != true && horiz_flip == true)
     {
         flip = SDL_FLIP_HORIZONTAL;
     }
-    else if (vertFlip == true && horizFlip == true)
+    else if (vert_flip == true && horiz_flip == true)
     {
         printf("ERROR cannot do both flips, google how plz byron\n");
     }
@@ -25,21 +25,21 @@ void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surfaceRect, bool vert
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer_, surface);
-    SDL_RenderCopyEx(renderer_, texture, NULL, &surfaceRect, 0, NULL, flip);
+    SDL_RenderCopyEx(renderer_, texture, NULL, &surface_rect, 0, NULL, flip);
     SDL_DestroyTexture(texture);
 }
 
 /*
  *The caller is responsible for SDL_FreeSurface on the *surface passed to this function
  */
-void GraphicsHandler::draw(SDL_Surface* surface, int xPos, int yPos)
+void GraphicsHandler::draw(SDL_Surface* surface, int x_pos, int y_pos)
 {
-    SDL_Rect textureRect;
+    SDL_Rect texture_rect;
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer_, surface);
-    SDL_QueryTexture(texture, NULL, NULL, &textureRect.w, &textureRect.h);
-    textureRect.x = xPos;
-    textureRect.y = yPos;
-    SDL_RenderCopy(renderer_, texture, NULL, &textureRect);
+    SDL_QueryTexture(texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
+    texture_rect.x = x_pos;
+    texture_rect.y = y_pos;
+    SDL_RenderCopy(renderer_, texture, NULL, &texture_rect);
 }
 
 GraphicsHandler::GraphicsHandler(SDL_Renderer* renderer)
@@ -51,3 +51,4 @@ GraphicsHandler::GraphicsHandler(SDL_Renderer* renderer)
 
     renderer_ = renderer;
 }
+

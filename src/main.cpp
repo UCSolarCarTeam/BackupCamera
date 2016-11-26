@@ -3,18 +3,24 @@
 #include <stdio.h>
 #include <SDL.h>
 
+//how to use:
+//./<binary> xpos ypos
 int main(int argc, char* argv[])
 {
     if (argc != 7)
     {
-        printf("Usage: %s   screen_x_cordinate  screen_y_coordinate  screen_width  screen_height  camera_res_x  camera_res_y\n", argv[0]);
+        printf("Invalid number of arguments. Needs six arguments separated by spaces"
+               "./<binary> screen_x screen_y "
+               "screen_width screen_height "
+               "camera_res_x camera_res_y\n");
         return 0;
     }
 
-    BackupCamera* backupCamera = new BackupCamera();
+    BackupCamera* backup_camera = new BackupCamera();
     SDL_Renderer* renderer = NULL;
+    SDL_Window* window = NULL;
 
-    if (!backupCamera->init(&renderer, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
+    if (!backup_camera->init(&renderer, &window, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
         fprintf(stderr, "Could not initialize!\n");
         return -1;
@@ -25,14 +31,14 @@ int main(int argc, char* argv[])
         printf("Renderer is null\n");
     }
 
-    backupCamera->initScreenSettings(0, atoi(argv[5]), atoi(argv[6]));
-    backupCamera->initGraphics(renderer);
+    backup_camera->init_screen_settings(window, 0, atoi(argv[5]), atoi(argv[6]));
+    backup_camera->init_graphics(renderer);
     printf("Starting threads\n");
-    backupCamera->startThreads();
+    backup_camera->start_threads();
 
-    while (backupCamera->processEvents())
+    while (backup_camera->process_events())
     {
-        if (backupCamera->update())
+        if (backup_camera->update())
         {
             SDL_RenderPresent(renderer);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
@@ -40,6 +46,6 @@ int main(int argc, char* argv[])
         }
     }
 
-    backupCamera->close();
+    backup_camera->close();
     return 0;
 }

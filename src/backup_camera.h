@@ -25,34 +25,43 @@ extern "C" {
 #include "WiringPiButtons.hpp"
 #endif
 
+//#include "MusicBar.h"
+//#include "SongPlayer.h"
 #include "graphics_handler.h"
 #include "videoStream.hpp"
+
+
+
 
 class BackupCamera
 {
 
+
 public:
     BackupCamera();
-    bool init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int screenWidth, int screenHeight);
-    bool initGraphics(SDL_Renderer* renderer);
-    bool initScreenSettings(int cameraDevice, int cameraHeight, int cameraWidth);
-    bool processEvents();
+    bool init(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
+    bool init_graphics(SDL_Renderer* renderer);
+    bool init_screen_settings(SDL_Window* window, int camera_device, int camera_height, int camera_width);
+    bool process_events();
     bool update();
-    void startThreads();
+    void start_threads();
+
     void close();
-    void toggleFullscreen();
 
 private:
-    bool initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindow, int xPos, int yPos, int screenWidth, int screenHeight);
-    void initGraphicsHandler(SDL_Renderer* renderer);
+    bool init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_window, int xpos, int ypos, int screen_width, int screen_height);
+    void init_graphics_handler(SDL_Renderer* renderer);
     void processGPIO();
     void signalToQuit();
 
-    GraphicsHandler* graphicsHandler_;
+    //SDL_Renderer *renderer_;
+    //SDL_Window *window_;
+    GraphicsHandler* graphics_handler_;
+    //SongPlayer *song_player_one_;
+
     /** Displayable **/
-    VideoStream* cameraOne_;
-    bool fullscreenFlag_;
-    int screenWidth_;
-    int screenHeight_;
-    SDL_Window* window_;
+    VideoStream* camera_one_;
+    //MusicBar *music_bar_one_;
+
+
 };
