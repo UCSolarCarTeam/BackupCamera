@@ -130,6 +130,7 @@ bool BackupCamera::processEvents()
                 {
                     this->toggleFullscreen();
                 }
+
                 break;
         }
     }
