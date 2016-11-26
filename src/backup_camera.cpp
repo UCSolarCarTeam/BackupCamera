@@ -1,6 +1,8 @@
 #include "backup_camera.h"
 
-BackupCamera::BackupCamera() : fullscreenFlag_(false), window_(NULL)
+BackupCamera::BackupCamera()
+    : fullscreenFlag_(false)
+    , window_(NULL)
 {
 }
 
@@ -122,6 +124,14 @@ bool BackupCamera::processEvents()
                         this->toggleFullscreen();
                         break;
                 }
+
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.clicks == 2)
+                {
+                    this->toggleFullscreen();
+                }
+
+                break;
         }
     }
 
