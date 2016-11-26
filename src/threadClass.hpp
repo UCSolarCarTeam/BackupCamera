@@ -3,7 +3,6 @@
 
 #include <thread>
 
-
 class I_ThreadClass
 {
 public:
@@ -12,7 +11,7 @@ public:
 
     bool StartThread()
     {
-        if (pthread_create(&thread_tracker, NULL, ThreadReference, this) == 0)
+        if (pthread_create(&threadTracker_, NULL, ThreadReference, this) == 0)
         {
             return true;
         }
@@ -24,22 +23,20 @@ public:
 
     void WaitForThreadToExit()
     {
-        pthread_join(thread_tracker, NULL);
+        pthread_join(threadTracker_, NULL);
     }
-
-
 
 protected:
     /** Anything inheriting this class must define this function */
     virtual void ThreadFunction() = 0;
 
 private:
-    static void* ThreadReference(void* thread_id)
+    static void* ThreadReference(void* threadId)
     {
-        ((I_ThreadClass*)thread_id)->ThreadFunction();
+        ((I_ThreadClass*)threadId)->ThreadFunction();
         return NULL;
     }
 
-    pthread_t thread_tracker;
+    pthread_t threadTracker_;
 };
 #endif
