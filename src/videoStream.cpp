@@ -3,20 +3,20 @@
 
 VideoStream::VideoStream()
 {
-    m_bufferNumber = 1;
-    m_updateImage = false;
-    m_quit = false;
+    bufferNumber_ = 1;
+    updateImage_ = false;
+    quit_ = false;
 }
 
-bool VideoStream::init_setting(SDL_Rect input_rect, int input_device, int camera_height, int camera_width)
+bool VideoStream::initSetting(SDL_Rect inputRect, int inputDevice, int cameraHeight, int cameraWidth)
 {
-    video_rect_ = input_rect;
-    m_input_device = input_device;
-    cap = VideoCapture(m_input_device);
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, camera_width);
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, camera_height);
+    videoRect_ = inputRect;
+    inputDevice_ = inputDevice;
+    cap_ = VideoCapture(inputDevice_);
+    cap_.set(CV_CAP_PROP_FRAME_WIDTH, cameraWidth);
+    cap_.set(CV_CAP_PROP_FRAME_HEIGHT, cameraHeight);
 
-    if (!cap.isOpened())
+    if (!cap_.isOpened())
     {
         return false;
     }
@@ -26,7 +26,7 @@ bool VideoStream::init_setting(SDL_Rect input_rect, int input_device, int camera
     }
 }
 
-bool VideoStream::update(GraphicsHandler* graphics_handler_)
+bool VideoStream::update(GraphicsHandler* graphicsHandler)
 {
     if (imageReady())
     {
@@ -39,7 +39,7 @@ bool VideoStream::update(GraphicsHandler* graphics_handler_)
                                img->widthStep,
                                0xff0000, 0x00ff00, 0x0000ff, 0
                                                        );
-        graphics_handler_->draw(surface, video_rect_, false, true);
+        graphicsHandler->draw(surface, videoRect_, false, true);
         SDL_FreeSurface(surface);
         return true;
     }
@@ -49,59 +49,64 @@ bool VideoStream::update(GraphicsHandler* graphics_handler_)
 
 void VideoStream::signalToQuit()
 {
-    m_quit = true;
+    quit_ = true;
 }
 
 void VideoStream::ThreadFunction()
 {
-    while (!m_quit)
+    while (!quit_)
     {
-        cap.read(m_frame);
+        cap_.read(frame_);
 
-        switch (m_bufferNumber)
+        switch (bufferNumber_)
         {
             case 1:
-                m_threadImage2 = m_frame;
-                m_bufferNumber = 2;
+                threadImage2_ = frame_;
+                bufferNumber_ = 2;
                 break;
 
             case 2:
-                m_threadImage3 = m_frame;
-                m_bufferNumber = 3;
+                threadImage3_ = frame_;
+                bufferNumber_ = 3;
                 break;
 
             case 3:
-                m_threadImage1 = m_frame;
-                m_bufferNumber = 1;
+                threadImage1_ = frame_;
+                bufferNumber_ = 1;
                 break;
         }
 
-        m_updateImage = true;
+        updateImage_ = true;
     }
 }
 
 bool VideoStream::imageReady()
 {
-    return m_updateImage;
+    return updateImage_;
 }
 
 IplImage* VideoStream::getFrame()
 {
-    m_updateImage = false;
+    updateImage_ = false;
 
-    switch (m_bufferNumber)
+    switch (bufferNumber_)
     {
         case 1:
-            return &m_threadImage1;
+            return &threadImage1_;
 
         case 2:
-            return &m_threadImage2;
+            return &threadImage2_;
 
         case 3:
-            return &m_threadImage3;
+            return &threadImage3_;
 
         default:
             //Shouldn't get here
             return NULL;
     }
+}
+
+void VideoStream::resizeVideoRect(SDL_Rect newRect)
+{
+    videoRect_ = newRect;
 }
