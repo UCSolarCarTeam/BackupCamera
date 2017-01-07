@@ -140,11 +140,11 @@ bool BackupCamera::processEvents()
                     this->toggleFullscreen();
                     lastTouchEventTime_ = 0;
                 }
-
-                else 
+                else
                 {
                     lastTouchEventTime_ = event.tfinger.timestamp;
                 }
+
                 break;
         }
     }
