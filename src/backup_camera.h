@@ -22,7 +22,7 @@ extern "C" {
 #ifndef RUNNINGONPI
 #define RUNNINGONPI
 #endif
-#include "WiringPiButtons.hpp"
+#include <wiringPi.h>
 #endif
 
 #include "graphics_handler.h"
@@ -52,6 +52,7 @@ private:
     /** Displayable **/
     VideoStream* cameraOne_;
     bool fullscreenFlag_;
+    Uint32 lastTouchEventTime_;
     int screenWidth_;
     int screenHeight_;
     SDL_Window* window_;
