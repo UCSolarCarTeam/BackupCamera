@@ -1,6 +1,9 @@
 #include "backup_camera.h"
 
-BackupCamera::BackupCamera() : fullscreenFlag_(false), window_(NULL)
+BackupCamera::BackupCamera()
+    : fullscreenFlag_(false)
+    , lastTouchEventTime_(0)
+    , window_(NULL)
 {
 }
 
@@ -122,6 +125,27 @@ bool BackupCamera::processEvents()
                         this->toggleFullscreen();
                         break;
                 }
+
+            case SDL_MOUSEBUTTONDOWN:
+                if (event.button.clicks == 2)
+                {
+                    this->toggleFullscreen();
+                }
+
+                break;
+
+            case SDL_FINGERDOWN:
+                if ((event.tfinger.timestamp - lastTouchEventTime_) <= 500)
+                {
+                    this->toggleFullscreen();
+                    lastTouchEventTime_ = 0;
+                }
+                else
+                {
+                    lastTouchEventTime_ = event.tfinger.timestamp;
+                }
+
+                break;
         }
     }
 
