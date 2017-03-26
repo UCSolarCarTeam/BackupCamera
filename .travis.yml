@@ -2,8 +2,8 @@ sudo: required
 
 install:
     - sudo Installer/MainInstaller.sh
-    - wget 'https://s3-us-west-2.amazonaws.com/ucsolarteam.hostedfiles/download'
-    - tar -zxvf download
+    - wget 'https://s3-us-west-2.amazonaws.com/ucsolarteam.hostedfiles/astyle'
+    - tar -zxvf astyle
     - (cd astyle/build/gcc && make release && sudo make install)
     - rm astyle -rf
 
