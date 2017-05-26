@@ -12,32 +12,28 @@ class VideoStream : public I_ThreadClass
 public:
     VideoStream();
     void signalToQuit();
-    bool init_setting(SDL_Rect input_rect, int input_device, int camera_height, int camera_width);
-    bool update(GraphicsHandler* graphics_handler_);
+    bool initSetting(SDL_Rect inputRect, int inputDevice, int cameraHeight, int cameraWidth);
+    bool update(GraphicsHandler* graphicsHandler);
     IplImage* getFrame();
-    void reboot_camera();
-    void releaseCaptureDevice();
-    void resizeVideoRect(SDL_Rect new_rect);
+    void rebootCamera();
+    void resizeVideoRect(SDL_Rect newRect);
 
 protected:
     void ThreadFunction();
 
     //TODO: old convention of m_ being member variable switch to tailing _.
 private:
-    IplImage m_threadImage1;
-    IplImage m_threadImage2;
-    IplImage m_threadImage3;
-    Mat m_frame;
-    SDL_Rect video_rect_;
-    VideoCapture cap;
-
     bool imageReady();
 
-
-
-    bool m_quit;
-    bool m_updateImage;
-    bool no_device;
-    int m_input_device;
-    int m_bufferNumber;
+    IplImage threadImage1_;
+    IplImage threadImage2_;
+    IplImage threadImage3_;
+    Mat frame_;
+    SDL_Rect videoRect_;
+    VideoCapture cap_;
+    bool quit_;
+    bool updateImage_;
+    bool noDevice_;
+    int inputDevice_;
+    int bufferNumber_;
 };

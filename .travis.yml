@@ -1,11 +1,14 @@
 sudo: required
 
 install:
-    - wget 'https://sourceforge.net/projects/astyle/files/latest/download'
-    - tar -zxvf download
+    - sudo Installer/MainInstaller.sh
+    - wget 'https://s3-us-west-2.amazonaws.com/ucsolarteam.hostedfiles/astyle'
+    - tar -zxvf astyle
     - (cd astyle/build/gcc && make release && sudo make install)
     - rm astyle -rf
 
 script:
+    - make
     - "! (astyle *.h *.cpp *.hpp -r --dry-run --options=astylerc | grep Formatted)"
+
 language: cpp
