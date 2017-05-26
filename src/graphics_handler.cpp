@@ -51,4 +51,3 @@ GraphicsHandler::GraphicsHandler(SDL_Renderer* renderer)
 
     renderer_ = renderer;
 }
-

@@ -28,7 +28,7 @@ extern "C" {
 //#include "MusicBar.h"
 //#include "SongPlayer.h"
 #include "graphics_handler.h"
-#include "videoStream.hpp"
+#include "videoStream.h"
 
 
 

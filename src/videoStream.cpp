@@ -1,4 +1,4 @@
-#include "videoStream.hpp"
+#include "videoStream.h"
 
 
 VideoStream::VideoStream()
@@ -60,20 +60,20 @@ void VideoStream::ThreadFunction()
 
         switch (m_bufferNumber)
         {
-            case 1:
-                m_threadImage2 = m_frame;
-                m_bufferNumber = 2;
-                break;
+        case 1:
+            m_threadImage2 = m_frame;
+            m_bufferNumber = 2;
+            break;
 
-            case 2:
-                m_threadImage3 = m_frame;
-                m_bufferNumber = 3;
-                break;
+        case 2:
+            m_threadImage3 = m_frame;
+            m_bufferNumber = 3;
+            break;
 
-            case 3:
-                m_threadImage1 = m_frame;
-                m_bufferNumber = 1;
-                break;
+        case 3:
+            m_threadImage1 = m_frame;
+            m_bufferNumber = 1;
+            break;
         }
 
         m_updateImage = true;
@@ -91,18 +91,18 @@ IplImage* VideoStream::getFrame()
 
     switch (m_bufferNumber)
     {
-        case 1:
-            return &m_threadImage1;
+    case 1:
+        return &m_threadImage1;
 
-        case 2:
-            return &m_threadImage2;
+    case 2:
+        return &m_threadImage2;
 
-        case 3:
-            return &m_threadImage3;
+    case 3:
+        return &m_threadImage3;
 
-        default:
-            //Shouldn't get here
-            return NULL;
+    default:
+        //Shouldn't get here
+        return NULL;
     }
 }
 

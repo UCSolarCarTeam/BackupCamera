@@ -18,7 +18,7 @@ OUTPUT_NAME = BackupCamera
 INCLUDE_FLAGS = -Ilib -Iinclude
 
 all :
-	 $(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS) -o $(OUTPUT_NAME) -pthread
+	$(CC) $(OBJS) $(INCLUDE_FLAGS) $(LINK_FLAGS) $(COMPILE_FLAGS) -o $(OUTPUT_NAME) -pthread
 
 clean :
 	rm BackupCamera

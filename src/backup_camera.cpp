@@ -35,7 +35,7 @@ bool BackupCamera::init_SDL(SDL_Renderer** empty_renderer, SDL_Window** empty_wi
     }
     else
     {
-        int windowMode = (m_fullscreenFlag ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
+        int windowMode = (m_fullscreenFlag == 1 ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
         *empty_window = SDL_CreateWindow("Video Application", xpos, ypos, screen_width, screen_height, windowMode);
 
         if (empty_window == NULL)
