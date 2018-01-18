@@ -96,6 +96,6 @@ cd ..
 
 #install wiringPi
 git clone https://github.com/WiringPi/WiringPi.git
-cd wiringPi
+cd WiringPi
 git pull origin
 ./build
