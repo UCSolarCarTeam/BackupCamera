@@ -27,6 +27,7 @@ bool BackupCamera::initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindo
 
     int windowMode = (fullscreenFlag_ == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
     *emptyWindow = SDL_CreateWindow("Video Application", xPos, yPos, screenWidth, screenHeight, windowMode);
+
     if (emptyWindow == NULL)
     {
         printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -34,12 +35,14 @@ bool BackupCamera::initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindo
     }
 
     *emptyRenderer = SDL_CreateRenderer(*emptyWindow, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
     if (*emptyRenderer == NULL)
     {
         printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
         printf("Creating a software empty_renderer instead\n");
 
         *emptyRenderer = SDL_CreateRenderer(*emptyWindow, -1, SDL_RENDERER_SOFTWARE);
+
         if (*emptyRenderer == NULL)
         {
             printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());

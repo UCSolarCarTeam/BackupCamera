@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     BackupCamera* backupCamera = new BackupCamera();
     SDL_Renderer* renderer = NULL;
 
-    // passing in an empty SDL_Renderer*. init will handle initializing SDL and if successfull, 
+    // passing in an empty SDL_Renderer*. init will handle initializing SDL and if successfull,
     // will pass back a non NULL SDL_Renderer*
     if (!backupCamera->init(&renderer, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {

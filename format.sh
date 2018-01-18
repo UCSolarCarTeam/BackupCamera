@@ -1,4 +1,4 @@
 #!/bin/bash -e
 
-astyle "*.h" "*.cpp" "*.hpp" -r --options=astylerc
+astyle "src/*.h" "src/*.cpp" "src/*.hpp" -r --options=astylerc
 find -name "*.orig" -delete
