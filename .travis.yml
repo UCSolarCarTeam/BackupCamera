@@ -9,6 +9,6 @@ install:
 
 script:
     - make
-    - "! (astyle *.h *.cpp *.hpp -r --dry-run --options=astylerc | grep Formatted)"
+    - "! (astyle src/*.h src/*.cpp src/*.hpp -r --dry-run --options=astylerc | grep Formatted)"
 
 language: cpp
