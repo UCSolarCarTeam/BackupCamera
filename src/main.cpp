@@ -14,6 +14,8 @@ int main(int argc, char* argv[])
     BackupCamera* backupCamera = new BackupCamera();
     SDL_Renderer* renderer = NULL;
 
+    // passing in an empty SDL_Renderer*. init will handle initializing SDL and if successfull,
+    // will pass back a non NULL SDL_Renderer*
     if (!backupCamera->init(&renderer, atoi(argv[1]), atoi(argv[2]), atoi(argv[3]), atoi(argv[4])))
     {
         fprintf(stderr, "Could not initialize!\n");
@@ -32,6 +34,8 @@ int main(int argc, char* argv[])
 
     while (backupCamera->processEvents())
     {
+        // update() will only return when a new image has been grabbed
+        // and processed from the backup camera
         if (backupCamera->update())
         {
             SDL_RenderPresent(renderer);

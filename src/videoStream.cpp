@@ -52,10 +52,28 @@ void VideoStream::signalToQuit()
     quit_ = true;
 }
 
+/*
+ * This is the only function that is threaded
+ * The purpose of threading this is because `cap.read()`
+ * takes a while to read the camera. And while it's reading
+ * from the camera, we can spend time on the main thread calling
+ * `RenderCopyEx()` and `RenderPresent()`. This increases framerates.
+ *
+ * To avoid blocking on the threads using a mutex to read from the `threadImageX`
+ * We decided that it'd be worth introducing a small amount of latency, but making it
+ * pretty race proof by using triple buffering.
+ *
+ * In hindsight, http://lazyfoo.net/tutorials/SDL/42_texture_streaming/index.php might
+ * give a good solution to our problem with streaming.
+ */
+
 void VideoStream::ThreadFunction()
 {
     while (!quit_)
     {
+
+        // This function takes a while to return
+        // It is also the only reason why we have threading
         cap_.read(frame_);
 
         switch (bufferNumber_)

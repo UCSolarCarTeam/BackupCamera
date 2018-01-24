@@ -33,6 +33,11 @@ class BackupCamera
 
 public:
     BackupCamera();
+    /**
+     * Used to initialize the Backup Camera
+     * This function will initialize SDL, so pass it an empty SDL_Renderer, and after this init function
+     * returns, the <code>SDL_Renderer**</code> will be initialized.
+     */
     bool init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int screenWidth, int screenHeight);
     bool initGraphics(SDL_Renderer* renderer);
     bool initScreenSettings(int cameraDevice, int cameraHeight, int cameraWidth);

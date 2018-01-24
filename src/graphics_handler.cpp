@@ -6,6 +6,7 @@
 void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surfaceRect, bool vertFlip, bool horizFlip)
 {
     SDL_RendererFlip flip;
+    double rotateAngle = 0;
 
     if (vertFlip == true && horizFlip != true)
     {
@@ -17,7 +18,9 @@ void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surfaceRect, bool vert
     }
     else if (vertFlip == true && horizFlip == true)
     {
-        printf("ERROR cannot do both flips, google how plz byron\n");
+        //Rotating 180 degrees is the same as flipping along the horizontal and verical axis.
+        flip = SDL_FLIP_NONE;
+        rotateAngle = 180;
     }
     else
     {
@@ -25,7 +28,7 @@ void GraphicsHandler::draw(SDL_Surface* surface, SDL_Rect surfaceRect, bool vert
     }
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer_, surface);
-    SDL_RenderCopyEx(renderer_, texture, NULL, &surfaceRect, 0, NULL, flip);
+    SDL_RenderCopyEx(renderer_, texture, NULL, &surfaceRect, rotateAngle, NULL, flip);
     SDL_DestroyTexture(texture);
 }
 

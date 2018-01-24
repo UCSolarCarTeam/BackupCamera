@@ -4,8 +4,7 @@ BackupCamera::BackupCamera()
     : fullscreenFlag_(false)
     , lastTouchEventTime_(0)
     , window_(NULL)
-{
-}
+{}
 
 bool BackupCamera::init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int screenWidth, int screenHeight)
 {
@@ -20,43 +19,38 @@ bool BackupCamera::init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int sc
 //Creates the Window
 bool BackupCamera::initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindow, int xPos, int yPos, int screenWidth, int screenHeight)
 {
-    bool success = true;
-
     if (SDL_Init(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) < 0)
     {
         printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-        success = false;
+        return false;
     }
-    else
+
+    int windowMode = (fullscreenFlag_ == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
+    *emptyWindow = SDL_CreateWindow("Video Application", xPos, yPos, screenWidth, screenHeight, windowMode);
+
+    if (emptyWindow == NULL)
     {
-        int windowMode = (fullscreenFlag_ == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
-        *emptyWindow = SDL_CreateWindow("Video Application", xPos, yPos, screenWidth, screenHeight, windowMode);
+        printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+        return false;
+    }
 
-        if (emptyWindow == NULL)
+    *emptyRenderer = SDL_CreateRenderer(*emptyWindow, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+    if (*emptyRenderer == NULL)
+    {
+        printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
+        printf("Creating a software empty_renderer instead\n");
+
+        *emptyRenderer = SDL_CreateRenderer(*emptyWindow, -1, SDL_RENDERER_SOFTWARE);
+
+        if (*emptyRenderer == NULL)
         {
-            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
-            success = false;
-        }
-        else
-        {
-            *emptyRenderer = SDL_CreateRenderer(*emptyWindow, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-            if (*emptyRenderer == NULL)
-            {
-                printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
-                printf("Creating a software empty_renderer instead\n");
-                *emptyRenderer = SDL_CreateRenderer(*emptyWindow, -1, SDL_RENDERER_SOFTWARE);
-
-                if (*emptyRenderer == NULL)
-                {
-                    printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
-                    success = false;
-                }
-            }
+            printf("Renderer could not be created. SDL_Error: %s \n", SDL_GetError());
+            return false;
         }
     }
 
-    return success;
+    return true;
 }
 
 //This is where you will define Rect's within the Window
