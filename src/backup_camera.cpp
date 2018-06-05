@@ -59,6 +59,7 @@ bool BackupCamera::initScreenSettings(int cameraDevice, int cameraHeight, int ca
     bool success = true;
     int w, h;
     SDL_GetWindowSize(window_, &w, &h);
+    printf("W: %d H: %d\n", w, h);
     SDL_Rect cameraOneRect;
     cameraOneRect.x = 0;
     cameraOneRect.y = 0;
