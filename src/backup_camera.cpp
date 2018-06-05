@@ -28,6 +28,10 @@ bool BackupCamera::initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindo
     int windowMode = (fullscreenFlag_ == true ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_BORDERLESS);
     *emptyWindow = SDL_CreateWindow("Video Application", xPos, yPos, screenWidth, screenHeight, windowMode);
 
+    int w, h;
+    SDL_GetWindowSize(window_, &w, &h);
+    printf("After opening a new window: W: %d H: %d\n", w, h);
+
     if (emptyWindow == NULL)
     {
         printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
