@@ -139,7 +139,7 @@ bool BackupCamera::processEvents()
             //         lastTouchEventTime_ = event.tfinger.timestamp;
             //     }
 
-                break;
+                // break;
         }
     }
 
