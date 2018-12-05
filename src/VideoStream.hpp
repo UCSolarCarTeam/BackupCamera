@@ -1,9 +1,9 @@
 #pragma once
 
-#include "threadClass.hpp"
+#include "ThreadClass.hpp"
 #include <cv.h>
 #include "opencv2/opencv.hpp"
-#include "graphics_handler.h"
+#include "GraphicsHandler.h"
 
 using namespace cv;
 

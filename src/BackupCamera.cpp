@@ -1,4 +1,4 @@
-#include "backup_camera.h"
+#include "BackupCamera.h"
 
 BackupCamera::BackupCamera()
     : fullscreenFlag_(false)
@@ -68,7 +68,7 @@ bool BackupCamera::initScreenSettings(int cameraDevice, int cameraHeight, int ca
     return success;
 }
 
-//Gives the graphics_handler the SDL_Renderer
+//Gives the GraphicsHandler the SDL_Renderer
 bool BackupCamera::initGraphics(SDL_Renderer* renderer)
 {
     bool success = true;

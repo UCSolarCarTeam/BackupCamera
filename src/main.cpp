@@ -1,4 +1,4 @@
-#include "backup_camera.h"
+#include "BackupCamera.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL.h>

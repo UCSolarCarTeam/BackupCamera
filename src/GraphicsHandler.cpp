@@ -1,4 +1,4 @@
-#include "graphics_handler.h"
+#include "GraphicsHandler.h"
 
 /*
  *The caller is responsible for SDL_FreeSurface on the *surface passed to this function

@@ -25,8 +25,8 @@ extern "C" {
 #include <wiringPi.h>
 #endif
 
-#include "graphics_handler.h"
-#include "videoStream.hpp"
+#include "GraphicsHandler.h"
+#include "VideoStream.hpp"
 
 class BackupCamera
 {
