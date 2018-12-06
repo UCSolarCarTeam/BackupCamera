@@ -54,7 +54,7 @@ private:
 
     GraphicsHandler* graphicsHandler_;
     /** Displayable **/
-    VideoStream* cameraOne_;
+    VideoStream* camera_;
     bool fullscreenFlag_;
     Uint32 lastTouchEventTime_;
     int screenWidth_;

@@ -12,7 +12,7 @@ bool BackupCamera::init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int sc
     success = initSDL(emptyRenderer, &window_, xPos, yPos, screenWidth, screenHeight) && success;
     screenWidth_ = screenWidth;
     screenHeight_ = screenHeight;
-    cameraOne_ = new VideoStream();
+    camera_ = new VideoStream();
     return success;
 }
 
@@ -59,12 +59,12 @@ bool BackupCamera::initScreenSettings(int cameraDevice, int cameraHeight, int ca
     bool success = true;
     int w, h;
     SDL_GetWindowSize(window_, &w, &h);
-    SDL_Rect cameraOneRect;
-    cameraOneRect.x = 0;
-    cameraOneRect.y = 0;
-    cameraOneRect.w = w;
-    cameraOneRect.h = h;
-    success = cameraOne_->initSetting(cameraOneRect, cameraDevice, cameraHeight, cameraWidth) && success;
+    SDL_Rect cameraRect;
+    cameraRect.x = 0;
+    cameraRect.y = 0;
+    cameraRect.w = w;
+    cameraRect.h = h;
+    success = camera_->initSetting(cameraRect, cameraDevice, cameraHeight, cameraWidth) && success;
     return success;
 }
 
@@ -86,10 +86,10 @@ bool BackupCamera::initGraphics(SDL_Renderer* renderer)
 }
 
 //only returns true if camera updates
-//Used for any "Updates" you need. Currently there is only one "camera" within this class.
+//Used for any "Updates" you need
 bool BackupCamera::BackupCamera::update()
 {
-    return cameraOne_->update(graphicsHandler_);
+    return camera_->update(graphicsHandler_);
 }
 
 bool BackupCamera::processEvents()
@@ -148,7 +148,7 @@ bool BackupCamera::processEvents()
 
 void BackupCamera::startThreads()
 {
-    cameraOne_->StartThread();
+    camera_->StartThread();
 }
 
 void BackupCamera::processGPIO()
@@ -157,35 +157,35 @@ void BackupCamera::processGPIO()
 
 void BackupCamera::signalToQuit()
 {
-    cameraOne_->signalToQuit();
+    camera_->signalToQuit();
 }
 
 void BackupCamera::close()
 {
-    cameraOne_->WaitForThreadToExit();
+    camera_->WaitForThreadToExit();
 }
 
 void BackupCamera::toggleFullscreen()
 {
     int w, h;
-    SDL_Rect cameraOneNewRect;
-    cameraOneNewRect.x = 0;
-    cameraOneNewRect.y = 0;
+    SDL_Rect cameraNewRect;
+    cameraNewRect.x = 0;
+    cameraNewRect.y = 0;
 
     if (!fullscreenFlag_)
     {
         SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN_DESKTOP);
         SDL_GetWindowSize(window_, &w, &h);
-        cameraOneNewRect.w = w;
-        cameraOneNewRect.h = h;
+        cameraNewRect.w = w;
+        cameraNewRect.h = h;
     }
     else
     {
         SDL_SetWindowFullscreen(window_, 0);
-        cameraOneNewRect.w = screenWidth_;
-        cameraOneNewRect.h = screenHeight_;
+        cameraNewRect.w = screenWidth_;
+        cameraNewRect.h = screenHeight_;
     }
 
     fullscreenFlag_ = !fullscreenFlag_;
-    cameraOne_->resizeVideoRect(cameraOneNewRect);
+    camera_->resizeVideoRect(cameraNewRect);
 }
