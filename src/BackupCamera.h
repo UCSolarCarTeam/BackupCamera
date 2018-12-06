@@ -22,7 +22,6 @@ extern "C" {
 #ifndef RUNNINGONPI
 #define RUNNINGONPI
 #endif
-#include <wiringPi.h>
 #endif
 
 #include "GraphicsHandler.h"

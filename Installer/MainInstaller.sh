@@ -93,9 +93,3 @@ cd ../..
 make -j4
 make install -j4
 cd ..
-
-#install wiringPi
-git clone https://github.com/WiringPi/WiringPi.git
-cd WiringPi
-git pull origin
-./build
