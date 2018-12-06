@@ -21,7 +21,6 @@ public:
 protected:
     void ThreadFunction();
 
-    //TODO: old convention of m_ being member variable switch to tailing _.
 private:
     bool imageReady();
 
