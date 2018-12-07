@@ -8,8 +8,7 @@ BackupCamera::BackupCamera()
 
 bool BackupCamera::init(SDL_Renderer** emptyRenderer, int xPos, int yPos, int screenWidth, int screenHeight)
 {
-    bool success = true;
-    success = initSDL(emptyRenderer, &window_, xPos, yPos, screenWidth, screenHeight) && success;
+    bool success = initSDL(emptyRenderer, &window_, xPos, yPos, screenWidth, screenHeight);
     screenWidth_ = screenWidth;
     screenHeight_ = screenHeight;
     camera_ = new VideoStream();
@@ -59,11 +58,7 @@ bool BackupCamera::initScreenSettings(int cameraDevice, int cameraHeight, int ca
     bool success = true;
     int w, h;
     SDL_GetWindowSize(window_, &w, &h);
-    SDL_Rect cameraRect;
-    cameraRect.x = 0;
-    cameraRect.y = 0;
-    cameraRect.w = w;
-    cameraRect.h = h;
+    SDL_Rect cameraRect {0, 0, w, h}; // x, y, w, h;
     success = camera_->initSetting(cameraRect, cameraDevice, cameraHeight, cameraWidth) && success;
     return success;
 }
@@ -149,10 +144,6 @@ bool BackupCamera::processEvents()
 void BackupCamera::startThreads()
 {
     camera_->StartThread();
-}
-
-void BackupCamera::processGPIO()
-{
 }
 
 void BackupCamera::signalToQuit()
