@@ -49,7 +49,6 @@ public:
 private:
     bool initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindow, int xPos, int yPos, int screenWidth, int screenHeight);
     void initGraphicsHandler(SDL_Renderer* renderer);
-    void processGPIO();
     void signalToQuit();
 
     GraphicsHandler* graphicsHandler_;
