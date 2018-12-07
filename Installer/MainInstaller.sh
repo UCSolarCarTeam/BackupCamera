@@ -10,7 +10,6 @@ finish() {
 	rm -rf $DIR/SDL2_ttf-2.0.12  || true
 	rm -rf $DIR/SDL2-2.0.3 || true
 	rm -rf $DIR/SDL2_mixer-2.0.0 || true
-	rm -rf $DIR/wiringPi/ || true
 }
 
 trap finish EXIT
@@ -24,16 +23,16 @@ else
     exit 0
 fi
 
-apt-get update --yes
-apt-get install build-essential --yes
-apt-get install libcv-dev --yes
-apt-get install libopencv-dev --yes
-apt-get install libao-dev --yes
-apt-get install libasound2-dev --yes
-apt-get install libpulse-dev --yes
-
-apt-get install libdbus-1-dev --yes
-apt-get install libudev-dev --yes
+apt-get update
+apt-get install -y \
+	build-essential \
+	libcv-dev\
+	libopencv-dev\
+	libao-dev\
+	libasound2-dev\
+	libpulse-dev\
+	libdbus-1-dev\
+	libudev-dev
 
 #SDL2.0
 (
