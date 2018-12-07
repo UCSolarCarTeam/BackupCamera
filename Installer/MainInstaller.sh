@@ -11,7 +11,6 @@ finish() {
 	rm -rf $DIR/SDL2-2.0.3 || true
 	rm -rf $DIR/SDL2_mixer-2.0.0 || true
 	rm -rf $DIR/wiringPi/ || true
-	rm -rf $DIR/libmpg123/ || true
 }
 
 trap finish EXIT
@@ -27,14 +26,6 @@ fi
 
 apt-get update --yes
 apt-get install build-essential --yes
-
-git clone https://github.com/gypified/libmpg123.git
-cd libmpg123
-./configure
-make
-sudo make install
-cd ..
-
 apt-get install libcv-dev --yes
 apt-get install libopencv-dev --yes
 apt-get install libao-dev --yes
