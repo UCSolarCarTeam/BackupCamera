@@ -1,9 +1,9 @@
 #pragma once
 
-#include "threadClass.hpp"
+#include "ThreadClass.hpp"
 #include <cv.h>
 #include "opencv2/opencv.hpp"
-#include "graphics_handler.h"
+#include "GraphicsHandler.h"
 
 using namespace cv;
 
@@ -21,7 +21,6 @@ public:
 protected:
     void ThreadFunction();
 
-    //TODO: old convention of m_ being member variable switch to tailing _.
 private:
     bool imageReady();
 
