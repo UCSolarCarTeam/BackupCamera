@@ -24,3 +24,76 @@ hdmi_group=2
 hdmi_mode=27 
 . Save the file and reboot the pi.
 
+
+= Steps to Setup VM for Camera on VirtualBox
+1. Download the latest version of VirtualBox from https://www.virtualbox.org/wiki/Downloads
+2. Go to http://www.debian.org/ and download the network installer image. 
+   * Recommended: debian-8.2.0-amd64-netinst.iso
+3. Open VirtualBox and create a new VM
+   * In the name field enter the desired name for the VM ex. "_Debian for Pi_"
+   * In the type field choose *Linux*
+   * In the version field choose *Debian (64-bit)*
+   * Set the memory size to *1024MB* (recommended size, can be changed later if needed)
+   * Choose "_create a virtual hard disk now_"
+   * Select VDI (VirtualBox Disk Image)
+   * Proceed with the default settings 
+4. Insert the Debian install DVD image into the VM storage
+   * Select the VM created above and navigate to the settings icon in the menu bar
+   * Then navigate to the storage icon in the new window and then _Controller : IDE_ 
+      ** Click on the DVD image, it should say empty at this point
+      ** Under _optical drive_ select the image downloaded in step 2
+5. Power on the VM and select install from the installer boot menu
+   * https://www.brianlinkletter.com/installing-debian-linux-in-a-virtualbox-virtual-machine/ is a good reference for install settings
+6. Go into _Activities_ and find _Terminal_ 
+   * Type the command `su`
+   * Next use the command `apt-get install sudo` (this will allow you to install git later)
+   * Next type in the command `nano /etc/sudoers`
+   * Scroll down to the line  "%sudo  ALL=(ALL:ALL) ALL"
+         * Below that line type in: _yourusernamehere_  ALL=(ALL:ALL) ALL
+   * Press  "Ctrl+x" then press "y" and then press [enter] to exit and save the file
+   * To check if "_sudo_" is working:
+         ** Type in the following command `sudo ls`
+         ** type in your password
+         ** If the output looks like the following, _sudo_ was installed successfully:
+              *** `Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos`
+   * Next run the command `sudo apt-get build-essential` (enables commands such as `g++`)
+7. Installing git
+   * Type in the command, `sudo apt-get install update`
+   * Followed by, `sudo apt-get install git`
+8. Now the BackupCamera repository can be cloned through the terminal
+
+A good reference for installing _sudo_ commands: https://www.privateinternetaccess.com/archive/forum/discussion/18063/debian-8-1-0-jessie-sudo-fix-not-installed-by-default
+  
+  
+= Compiling and Running the Program
+1. After cloning the repository, `cd` into the "_Installer_" file
+2. Run the command `sudo ./MainInstaller.sh`
+3. Next run the command `make` to create generate the executable for the BackupCamera code
+4. The program should now run with `./BackupCamera`
+   * The program currently takes 6 command line arguments
+      ** 2 for window position, 2 for window size and 2 for camera resolution
+   * If the window is black refer to the _setting up a webcam in the vm_ instructions below
+
+
+= Setting Up a Webcam in the VM
+1. Install *Oracle VM VirtualBox Extension Pack*
+   * Launch _Oracle VirtualBox Manager_ and navigate to _File_ -> _Preferences_
+   * In the _Preferences_ window, select _Extensions_
+   * Press _Add new package_ and add your extension pack if it isn't already there
+2. Launch the guest OS (your VM)
+3. Launch command prompt on your host OS
+   * `cd` into where the VirtualBox folder is located 
+      ** Example file path may be: `cd c:\Program Files\Oracle\VirtualBox`
+   * List the available cameras using the command `VBoxManage list webcams`
+      ** The available webcams should be listed using "_.x webcamName_"
+   * Next run the command `VBoxManage controlvm _your VM name_ webcam attach _.x_`
+   
+A good reference website is https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/
+   
+   
+
+
+   
+   
+   
+  
