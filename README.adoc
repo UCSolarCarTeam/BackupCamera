@@ -45,9 +45,10 @@ hdmi_mode=27
       ** Example file path may be: `cd c:\Program Files\Oracle\VirtualBox`
    * List the available cameras using the command `VBoxManage list webcams`
       ** The available webcams should be listed using "_.x webcamName_"
-   * Next run the command `VBoxManage controlvm "[yourVirtualMachineName]" webcam attach [.x]`
+   * Next run the command `VBoxManage controlvm "<yourVirtualMachineName>" webcam attach <.x>`
    
-[More information on setting up a webcam in Virtual Box](https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/)
+
+https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[More information on setting up a webcam in Virtual Box]
    
    
 
