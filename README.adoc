@@ -25,17 +25,16 @@ hdmi_mode=27
 . Save the file and reboot the pi.
  
 = Compiling and Running the Program
-1. After cloning the repository, `cd` into the "_Installer_" file
-2. Run the command `sudo ./MainInstaller.sh`
-3. Next run the command `make` to create generate the executable for the BackupCamera code
+1. After cloning the repository, navigate to the installer directory: `cd Installer` 
+2. Run the `MainInstaller.sh` script as root: `sudo ./MainInstaller.sh`
+3. Generate the executable with `make -j4`, this will make it a lot faster as it is generated using 4 cores
 4. The program should now run with `./BackupCamera`
-   * The program currently takes 6 command line arguments
-      ** 2 for window position (x, y), 2 for window size (x, y) and 2 for camera resolution
-   * If the window is black refer to the _setting up a webcam in the vm_ instructions below
-
+   * The program currently takes 6 command line arguments: 2 for window position (x, y), 2 for window size (x, y) and 2 for camera resolution
+   * For example try: `./BackupCamera 100 100 100 100 100 100`  
 
 = Setting Up a Webcam in the VM
-1. Install *Oracle VM VirtualBox Extension Pack*
+1. Install *Oracle VM VirtualBox Extension Pack* (Provides support for USB 2.0, 3.0)
+   * Be sure to install the extension pack that matches the version of Virtual Box you are running 
    * Launch _Oracle VirtualBox Manager_ and navigate to _File_ -> _Preferences_
    * In the _Preferences_ window, select _Extensions_
    * Press _Add new package_ and add your extension pack if it isn't already there
@@ -47,13 +46,5 @@ hdmi_mode=27
       ** The available webcams should be listed using "_.x webcamName_"
    * Next run the command `VBoxManage controlvm "<yourVirtualMachineName>" webcam attach <.x>`
    
-
-https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[More information on setting up a webcam in Virtual Box]
-   
-   
-
-
-   
-   
-   
-  
+= Further Reading
+https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[Setting up a webcam in Virtual Box (windows)]
