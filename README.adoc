@@ -27,7 +27,7 @@ hdmi_mode=27
 = Compiling and Running the Program
 1. After cloning the repository, navigate to the installer directory: `cd Installer` 
 2. Run the `MainInstaller.sh` script as root: `sudo ./MainInstaller.sh`
-3. Generate the executable with `make -j4`, this will make it a lot faster as it is generated using 4 cores
+3. Generate the executable with `make -j4`, `-j4` will decrease the compile time by using 4 threads, this number can be increased depending on how many threads are adequate
 4. The program should now run with `./BackupCamera`
    * The program currently takes 6 command line arguments: 2 for window position (x, y), 2 for window size (x, y) and 2 for camera resolution
    * For example try: `./BackupCamera 100 100 100 100 100 100`  
