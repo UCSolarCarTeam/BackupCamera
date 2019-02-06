@@ -47,4 +47,4 @@ hdmi_mode=27
    * Next run the command `VBoxManage controlvm "<yourVirtualMachineName>" webcam attach <.x>`
    
 = Further Reading
-https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[Setting up a webcam in Virtual Box (windows)]
+   * https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[Setting up a webcam in Virtual Box (windows)]
