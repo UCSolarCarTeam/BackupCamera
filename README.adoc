@@ -23,4 +23,28 @@ Then write 2 for hdmi_group and 27 for mode for a result of:
 hdmi_group=2 
 hdmi_mode=27 
 . Save the file and reboot the pi.
+ 
+= Compiling and Running the Program
+1. After cloning the repository, navigate to the installer directory: `cd Installer` 
+2. Run the `MainInstaller.sh` script as root: `sudo ./MainInstaller.sh`
+3. Generate the executable with `make -j4`, `-j4` will decrease the compile time by using 4 threads, this number can be increased depending on how many threads are adequate
+4. The program should now run with `./BackupCamera`
+   * The program currently takes 6 command line arguments: 2 for window position (x, y), 2 for window size (x, y) and 2 for camera resolution
+   * For example try: `./BackupCamera 100 100 100 100 100 100`  
 
+= Setting Up a Webcam in the VM
+1. Install *Oracle VM VirtualBox Extension Pack* (Provides support for USB 2.0, 3.0)
+   * Be sure to install the extension pack that matches the version of Virtual Box you are running 
+   * Launch _Oracle VirtualBox Manager_ and navigate to _File_ -> _Preferences_
+   * In the _Preferences_ window, select _Extensions_
+   * Press _Add new package_ and add your extension pack if it isn't already there
+2. Launch the guest OS (your VM)
+3. Launch command prompt on your host OS
+   * `cd` into where the VirtualBox folder is located 
+      ** Example file path may be: `cd c:\Program Files\Oracle\VirtualBox`
+   * List the available cameras using the command `VBoxManage list webcams`
+      ** The available webcams should be listed using "_.x webcamName_"
+   * Next run the command `VBoxManage controlvm "<yourVirtualMachineName>" webcam attach <.x>`
+   
+= Further Reading
+   * https://scribles.net/using-webcam-in-virtualbox-guest-os-on-windows-host/[Setting up a webcam in Virtual Box (windows)]
