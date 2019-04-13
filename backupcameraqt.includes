@@ -1,0 +1,7 @@
+lib/WiringPi
+lib/WiringPi/devLib
+lib/WiringPi/examples
+lib/WiringPi/wiringPi
+lib/WiringPi/wiringPiD
+src
+.
