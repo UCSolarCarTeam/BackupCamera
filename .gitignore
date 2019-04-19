@@ -1,3 +1,16 @@
 tags
 BackupCamera
-
+*.pro.*
+*.autosave
+Makefile*
+*.o
+moc_*
+.tags*
+build*
+*.user*
+*.orig
+logs/
+Tests/target_wrapper.sh
+.qmake.stash
+*.gch
+.fuse_hidden*
