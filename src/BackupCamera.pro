@@ -13,6 +13,9 @@ PKGCONFIG += opencv
 
 INCLUDEPATH += /usr/local/include/SDL2/
 
+OBJECTS_DIR = ../build/.obj
+DESTDIR = ../build/
+
 SOURCES += \
     BackupCamera.cpp \
     GraphicsHandler.cpp \
