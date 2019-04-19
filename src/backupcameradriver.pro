@@ -3,7 +3,7 @@ QT -= gui
 
 CONFIG += c++11
 
-TARGET = backupcameradriver
+TARGET = BackupCamera
 TEMPLATE = app
 CONFIG += console
 
