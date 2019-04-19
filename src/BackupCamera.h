@@ -22,11 +22,10 @@ extern "C" {
 #ifndef RUNNINGONPI
 #define RUNNINGONPI
 #endif
-#include <wiringPi.h>
 #endif
 
-#include "graphics_handler.h"
-#include "videoStream.hpp"
+#include "GraphicsHandler.h"
+#include "VideoStream.hpp"
 
 class BackupCamera
 {
@@ -50,12 +49,11 @@ public:
 private:
     bool initSDL(SDL_Renderer** emptyRenderer, SDL_Window** emptyWindow, int xPos, int yPos, int screenWidth, int screenHeight);
     void initGraphicsHandler(SDL_Renderer* renderer);
-    void processGPIO();
     void signalToQuit();
 
     GraphicsHandler* graphicsHandler_;
     /** Displayable **/
-    VideoStream* cameraOne_;
+    VideoStream* camera_;
     bool fullscreenFlag_;
     Uint32 lastTouchEventTime_;
     int screenWidth_;

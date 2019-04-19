@@ -13,14 +13,15 @@ PKGCONFIG += opencv
 
 INCLUDEPATH += /usr/local/include/SDL2/
 
-SOURCES += main.cpp \
-    backup_camera.cpp \
-    graphics_handler.cpp \
-    videoStream.cpp
+SOURCES += \
+    BackupCamera.cpp \
+    GraphicsHandler.cpp \
+    main.cpp \
+    VideoStream.cpp
 
 HEADERS += \
-    backup_camera.h \
-    graphics_handler.h \
-    I_displayable.h \
-    threadClass.hpp \
-    videoStream.hpp
+    BackupCamera.h \
+    GraphicsHandler.h \
+    ThreadClass.hpp \
+    VideoStream.hpp
+

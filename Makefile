@@ -1,5 +1,5 @@
 #OBJS = files to compile
-OBJS = src/main.cpp src/threadClass.hpp src/videoStream.cpp src/backup_camera.cpp src/graphics_handler.cpp
+OBJS = src/main.cpp src/ThreadClass.hpp src/VideoStream.cpp src/BackupCamera.cpp src/GraphicsHandler.cpp
 
 
 #CC = compiler used
