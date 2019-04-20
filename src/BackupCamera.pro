@@ -7,11 +7,10 @@ TARGET = BackupCamera
 TEMPLATE = app
 CONFIG += console
 
-LIBS += -lSDL2_image -lSDL2
-CONFIG += link_pkgconfig
-PKGCONFIG += opencv
+LIBS += -lSDL2_image -lSDL2 `pkg-config --libs opencv`
 
-INCLUDEPATH += /usr/local/include/SDL2/
+
+INCLUDEPATH += /usr/local/include/SDL2/ /usr/include/opencv/
 
 OBJECTS_DIR = ../build/.obj
 DESTDIR = ../build/
