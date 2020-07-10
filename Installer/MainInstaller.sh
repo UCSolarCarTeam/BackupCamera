@@ -10,17 +10,15 @@ finish() {
 	rm -rf $DIR/SDL2_ttf-2.0.12  || true
 	rm -rf $DIR/SDL2-2.0.3 || true
 	rm -rf $DIR/SDL2_mixer-2.0.0 || true
+	rm -rf $DIR/download || true
 }
 
 trap finish EXIT
 
-USER=`whoami`
-if [ $USER = "root" ]
-    then
-    echo "Running as ROOT"
-else
-    echo "***********YOU ARE NOT ROOT************"
-    exit 0
+if [[ $UID != 0 ]]; then
+    echo "Please run this script with sudo:"
+    echo "sudo $0 $*"
+    exit 1
 fi
 
 apt-get update
@@ -39,6 +37,16 @@ tar -xzvf SDL2-2.0.3.tar.gz
 (	
 	cd SDL2-2.0.3
 	./configure
+	make -j4
+	make install -j4
+)
+
+#Freetype2 (For SDL2_ttf)
+wget https://sourceforge.net/projects/freetype/files/freetype2/2.10.2/freetype-2.10.2.tar.gz/download
+tar -xzvf download
+(
+	cd freetype-2.10.2
+	./configure --enable-freetype-config
 	make -j4
 	make install -j4
 )
