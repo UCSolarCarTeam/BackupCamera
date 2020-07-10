@@ -2,3 +2,5 @@ tags
 BackupCamera
 
 Installer/SDL*
+build*/
+*.o

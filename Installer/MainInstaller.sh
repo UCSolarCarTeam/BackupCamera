@@ -26,29 +26,19 @@ fi
 apt-get update
 apt-get install -y \
 	build-essential \
-	libcv-dev\
-	libopencv-dev\
-	libao-dev\
-	libasound2-dev\
-	libpulse-dev\
-	libdbus-1-dev\
-	libudev-dev
+	libopencv-dev \
+	libao-dev \
+	libasound2-dev \
+	libpulse-dev \
+	libdbus-1-dev \
+	libudev-dev 
 
 #SDL2.0
 wget https://www.libsdl.org/release/SDL2-2.0.3.tar.gz
 tar -xzvf SDL2-2.0.3.tar.gz
 (	
 	cd SDL2-2.0.3
-	ARCHITECTURE=`uname -m`
-	if [ ${ARCHITECTURE} = "armv7l" ]
-	then
-		echo "Downloading and installing all dependencies for the Raspberry Pi running Raspbian (Debian)"
-	    ./configure --host=armv71-raspberry-linux-gnueabihf --target=arm-raspberry-linux-gnueabihf --disable-video-opengl --disable-video-x11
-	else
-		echo "Downloading and installing all dependencies for general Linux"
-	    ./configure 
-	fi
-
+	./configure
 	make -j4
 	make install -j4
 )
